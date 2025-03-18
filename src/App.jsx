@@ -8,6 +8,7 @@ import LoginRegister from './components/LoginRegister'
 import Pagination from './components/Pagination'
 import Footer from './components/Footer'
 import { Routes, Route } from 'react-router-dom'
+import { Offers } from './components/Offers'
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
           } />
           <Route path="/login" element={<LoginRegister />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/offers" element={<Offers />} />
         </Routes>
       </div >
       <Footer />

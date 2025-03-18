@@ -1,12 +1,22 @@
+import { useState } from "react";
 import Property from "./Property";
-import { Link } from "react-router-dom";
-
+import AddPropertyForm from "./AddPropertyForm";
+import Sidebar from "./Sidebar";
 
 export default function Profile() {
-    return (
-        <>
-            <div className="flex gap-5">
-                <div className="w-full md:w-1/4">
+  const [showAddForm, setShowAddForm] = useState(false);
+  var userActive = true;
+  const toggleAddForm = () => {
+    setShowAddForm((prev) => !prev);
+  };
+  const addProperty = (property) => {
+    //Add property here
+    console.log(property);
+  };
+  return (
+    <div className="mb-8">
+      <div className="flex gap-5">
+        {/* <div className="w-full md:w-1/4">
                     <div className="p-4 pb-0">
                         <div className="flex align-center justify-start pb-4">
                             <div class="mr-4 flex items-center justify-center w-16 h-16 rounded-full bg-blue-500 text-white text-xl font-bold">
@@ -34,16 +44,35 @@ export default function Profile() {
                     </ul>
 
 
-                </div>
-                <div className="w-full md:w-3/4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10">
-                        {[...Array(10)].map((_, index) => (
-                            <Property key={index} />
-                        ))}
-                    </div>
-                </div>
-            </div >
+                </div> */}
+        <Sidebar />
+        <div className="w-full md:w-3/4">
+          {userActive ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10">
+              {[...Array(10)].map((_, index) => (
+                <Property key={index} />
+              ))}
+            </div>
+          ) : (
+            <div className="bg-red-100 border border-red-500 text-red-700 p-6 rounded-lg">
+              <h3 className="text-xl font-semibold">Error</h3>
+              <p>Your account has been deactivated. Please contact admin.</p>
+            </div>
+          )}
+        </div>
+      </div>
+      {userActive && (
+        <button
+          onClick={toggleAddForm}
+          className="fixed bottom-20 right-5 bg-blue-500 text-white px-6 py-3 rounded-full shadow-lg"
+        >
+          + Add Property
+        </button>
+      )}
 
-        </>
-    )
+      {showAddForm && (
+        <AddPropertyForm onAddProperty={addProperty} onClose={toggleAddForm} />
+      )}
+    </div>
+  );
 }
